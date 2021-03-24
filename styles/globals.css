@@ -1,9 +1,18 @@
+
 html,
 body {
+  font-family: Sedan;
+  font-size: 24px;
+  color: #FD4A4F;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background: url('../images/bgImg.jpg');
+  --moz-background-size:100%;
+  -webkit-background-size:100%;
+  -o-background-size:100%;
+  background-size:100%;
 }
 
 a {
@@ -13,4 +22,33 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+
+:root {
+  --mainColor:#111B47 ;
+  /*#FFD166*/
+}
+a {
+  background:
+          linear-gradient(
+                  to bottom, var(--mainColor) 0%,
+                  var(--mainColor) 100%
+          );
+  background-position: 0 100%;
+  border-radius: 5px;
+  background-repeat: repeat-x;
+  background-size: 4px 4px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: background-size 0.2s;
+}
+a:hover {
+  background-size: 4px 50px;
+  cursor: pointer;
+}
+h6{
+  margin:7px;
+  font-size:15px;
+  font-family: Sedan;
 }
