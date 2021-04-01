@@ -18,14 +18,14 @@
 .tables{
     margin-top: 2rem;
     display: grid;
-    grid-template-columns: repeat(3, 750px);
-    grid-template-rows: repeat(3, 300px);
+    grid-template-columns: repeat(4, 450px);
+    grid-template-rows: repeat(4, 250px);
+    align-self: center;
     justify-content: center;
 }
 .table{
-    border: dashed white 1px;
     width: 250px;
-    height: 120px;
+    height: 127px;
     border-radius: 3px;
     display: grid;
     grid-template-rows: 1fr 1fr;
@@ -43,4 +43,52 @@
     position: absolute;
     font-size: 20px;
     color: white;
+}
+.person{
+}
+.person:hover{
+    border: solid 1px white;
+    margin: -1px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.barCounter{
+    display: block;
+    position: absolute;
+    top: 55.9vh;
+    left: 80vw;
+    width: 60px;
+    height: 450px;
+    background: url('../images/barCounter.jpeg');
+    border-radius: 5px 5px 0 0;
+    border-bottom: 4px solid black;
+}
+#2{
+    border: dashed white 1px;
+}
+.door{
+    background-color:#350D10;
+    display: block;
+    position: absolute;
+    top: 75vh;
+    left: 85.3vw;
+    width: 150px;
+    height: 200px;
+    text-align: center;
+    padding-top: 150px;
+}
+.danceFloor{
+    background-color: white;
+    width: 90%;
+    border-radius: 5px;
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 5;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr) ;
+}
+.block{
+
 }
