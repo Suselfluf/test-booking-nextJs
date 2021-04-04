@@ -9,6 +9,10 @@
 }
 .hall{
     display: block;
+    background-image: url("../images/Hall.jpg");
+    background-size: 98%;
+    background-position:center;
+    background-repeat: no-repeat;
     border: solid 3px black;
     height: 90vh;
     position: relative;
@@ -16,22 +20,43 @@
     margin:0 3rem 3rem 3rem
 }
 .tables{
-    margin-top: 2rem;
+    margin-top: 2.4rem;
+    margin-left: 7.7rem;
     display: grid;
-    grid-template-columns: repeat(4, 450px);
-    grid-template-rows: repeat(4, 250px);
+    grid-template-columns: repeat(3, 450px);
+    grid-template-rows: repeat(4, 260px);
     align-self: center;
-    justify-content: center;
+    /*justify-content: center;*/
 }
 .table{
-    width: 250px;
-    height: 127px;
+    margin-top: 1rem;
+    margin-left: -2px;
+    width: 251px;
+    height: 100px;
     border-radius: 3px;
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 2fr 1fr;
     text-align: center;
     align-self: center;
+}
+.table:hover{
+    border: solid 3px black;
+    cursor: pointer;
+    border-radius: 10px;
+}
+#rounded{
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    margin-top: 0.8rem;
+    margin-left: 5.2rem;
+}
+#rounded1{
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    margin-top: 0.8rem;
 }
 .tableImg{
     grid-column-start:2;
@@ -44,27 +69,8 @@
     font-size: 20px;
     color: white;
 }
-.person{
-}
-.person:hover{
-    border: solid 1px white;
-    margin: -1px;
-    cursor: pointer;
-    border-radius: 3px;
-}
+
 .barCounter{
-    display: block;
-    position: absolute;
-    top: 55.9vh;
-    left: 80vw;
-    width: 60px;
-    height: 450px;
-    background: url('../images/barCounter.jpeg');
-    border-radius: 5px 5px 0 0;
-    border-bottom: 4px solid black;
-}
-#2{
-    border: dashed white 1px;
 }
 .door{
     background-color:#350D10;
@@ -78,17 +84,14 @@
     padding-top: 150px;
 }
 .danceFloor{
-    background-color: white;
-    width: 90%;
-    border-radius: 5px;
+    width: 500px;
+    margin-top: 2.6rem;
+    margin-right: 8rem;
+    height: 470px;
+    align-self: center;
+    /*border: dashed darkblue;*/
     grid-column-start: 2;
-    grid-column-end: 5;
+    grid-column-end: 4;
     grid-row-start: 2;
-    grid-row-end: 5;
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr) ;
-}
-.block{
-
+    grid-row-end: 4;
 }

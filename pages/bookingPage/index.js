@@ -1,4 +1,6 @@
 import {Table} from './table'
+import {RoundTable} from './roundTable'
+import {RoundTable1} from './roundTable1'
 import {BarCounter} from './barCounter'
 import {DanceFloor} from './danceFloor'
 import styles from '../../styles/bookingPage.module.css'
@@ -23,17 +25,16 @@ export class bookingPage extends React.Component{
                     <div className={styles.wrapper}>
                         <div className={styles.hall}>
                             <div className={styles.tables}>
-                                <Table number='1'></Table>
+                                <RoundTable number='1'></RoundTable>
                                 <Table number='2'></Table>
                                 <Table number='3'></Table>
-                                <Table number='4'></Table>
-                                <Table number='5'></Table>
+                                <RoundTable1 number='4'></RoundTable1>
                                 <DanceFloor></DanceFloor>
-                                <Table number='6'></Table>
+                                <RoundTable1 number='5'></RoundTable1>
+                                <RoundTable number='6'></RoundTable>
                                 <Table number='7'></Table>
+                                <Table number='8'></Table>
                             </div>
-                            <BarCounter></BarCounter>
-                            <div className={styles.door}>Enterance</div>
                         </div>
                     </div>
                 </div>

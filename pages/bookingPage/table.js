@@ -11,28 +11,29 @@ export class Table extends React.Component{
     }
 
     booking = (e) => {
-        if(!e.target.style.border){
-            e.target.style.border = 'solid 1px yellow'
-            e.target.style.borderRadius = '3px'
+        let item = e.target.closest('h2')               // Починить чтобы при нажатии на цифру выделялся блок
+        if (item != null){
+            return 0
+        }else{
+            if(!e.target.style.border){
+                e.target.style.border = 'solid 3px black'
+                e.target.style.borderRadius = '10px'
+            }
+            else {
+                e.target.removeAttribute('style')
+            }
+            console.log(this.number)                      // Номер стола
         }
-        else {
-            e.target.removeAttribute('style')
-        }
-        e.target.style.margin = '-1px'
-        console.log(this.number)                      // Номер стола
-        console.log(e.target.id)                      // Положение клиента
+        alert(item)
+
     }
 
 
 
     render(){
         return(
-            <div className={styles.table}>
-                <div><img className={styles.person} id='left-top' onClick={this.booking} src="https://img.icons8.com/windows/55/000000/person-male.png"/></div>
-                <div><img className={styles.person} id='right-top' onClick={this.booking} src="https://img.icons8.com/windows/55/000000/person-male.png"/></div>
-                <div className={styles.tableImg}><h2 id={styles.tableNumber}>{this.number}</h2><img src="https://img.icons8.com/ios/100/000000/table.png"/></div>
-                <div><img className={styles.person} id='left-bottom' onClick={this.booking}  src="https://img.icons8.com/windows/55/000000/person-male.png"/></div>
-                <div><img className={styles.person} id='right-bottom' onClick={this.booking} src="https://img.icons8.com/windows/55/000000/person-male.png"/></div>
+            <div className={styles.table} onClick={this.booking}>
+                <h2>{this.number}</h2>
             </div>
         )
     }
