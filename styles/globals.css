@@ -1,6 +1,6 @@
-
 html,
 body {
+  height: 100%;
   font-family: Sedan;
   font-size: 24px;
   color: #FD4A4F;
@@ -27,7 +27,6 @@ a {
 
 :root {
   --mainColor:#111B47 ;
-  /*#FFD166*/
 }
 a {
   background:
@@ -50,5 +49,4 @@ a:hover {
 h6{
   margin:7px;
   font-size:15px;
-  font-family: Sedan;
 }
