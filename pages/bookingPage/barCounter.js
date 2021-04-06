@@ -1,4 +1,4 @@
-import styles from '../../styles/bookingPage.module.css'
+
 
 import React from 'react'
 

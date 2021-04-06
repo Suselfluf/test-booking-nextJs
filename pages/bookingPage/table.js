@@ -1,4 +1,4 @@
-import styles from '../../styles/bookingPage.module.css'
+import styles from '../../styles/table.module.sass'
 
 import React from 'react'
 
@@ -8,6 +8,7 @@ export class Table extends React.Component{
     constructor(props) {
         super(props);
         this.number = props.number
+        this.chairs = props.chairs
     }
 
     booking = (e) => {
@@ -17,7 +18,6 @@ export class Table extends React.Component{
         }else{
             if(!e.target.style.border){
                 e.target.style.border = 'solid 3px black'
-                e.target.style.borderRadius = '10px'
             }
             else {
                 e.target.removeAttribute('style')
@@ -28,11 +28,9 @@ export class Table extends React.Component{
 
     }
 
-
-
     render(){
         return(
-            <div className={styles.table} onClick={this.booking}>
+            <div className={this.chairs === 3 ? styles.rounded : styles.table} onClick={this.booking}>
                 <h2>{this.number}</h2>
             </div>
         )
