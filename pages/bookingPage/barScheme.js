@@ -1,6 +1,8 @@
 
 import styles from '../../styles/barScheme.module.sass'
 import {Table} from './table'
+import {BarMenu} from './barMenu'
+import {OrderWindow} from './orderWindow'
 
 import React from 'react'
 
@@ -9,6 +11,22 @@ import React from 'react'
 export class BarScheme extends React.Component{
     constructor(props) {
         super(props);
+        this.state = {
+            orderOpen:false,
+            reservedTable:0,
+            currentTableNumber:0
+        }
+    }
+
+    handleState = (number) =>{
+        this.setState({orderOpen:!this.state.orderOpen, currentTableNumber:number})
+        console.log(this.state.orderOpen)
+        this.state.reservedTable = number
+        console.log(this.state.reservedTable)
+    }
+
+    resetTableOrder = () => {
+        this.setState({currentTableNumber:0})
     }
 
 
@@ -19,32 +37,34 @@ export class BarScheme extends React.Component{
                     <div className={styles.hall}>
                         <div className={styles.tables}>
                             <div className={styles.place} id={styles.rounded1}>
-                                <Table number ={1} chairs ={3}></Table>
+                                <Table number ={1} chairs ={3} changeState={this.handleState}></Table>
+                            </div>
+                            <div className={styles.place} onClick={this.check}>
+                                <Table number ={2} chairs ={8} changeState={this.handleState}></Table>
                             </div>
                             <div className={styles.place}>
-                                <Table number ={2} chairs ={8}></Table>
-                            </div>
-                            <div className={styles.place}>
-                                <Table number ={3} chairs ={8}></Table>
+                                <Table number ={3} chairs ={8} changeState={this.handleState}></Table>
                             </div>
                             <div className={styles.place} id={styles.rounded}>
-                                <Table number ={4} chairs ={3}></Table>
+                                <Table number ={4} chairs ={3} changeState={this.handleState}></Table>
                             </div>
                             <div className={styles.danceFloor}>
                             </div>
                             <div className={styles.place} id={styles.rounded}>
-                                <Table number ={5} chairs ={3}></Table>
+                                <Table number ={5} chairs ={3} changeState={this.handleState}></Table>
                             </div>
                             <div className={styles.place} id={styles.rounded1}>
-                                <Table number ={6} chairs ={3}></Table>
+                                <Table number ={6} chairs ={3} changeState={this.handleState}></Table>
                             </div>
                             <div className={styles.place}>
-                                <Table number ={7} chairs ={8}></Table>
+                                <Table number ={7} chairs ={8} changeState={this.handleState}></Table>
                             </div>
                             <div className={styles.place}>
-                                <Table number ={8} chairs ={8}></Table>
+                                <Table number ={8} chairs ={8} changeState={this.handleState}></Table>
                             </div>
                         </div>
+                        <BarMenu></BarMenu>
+                        {this.state.currentTableNumber!==0? <OrderWindow reservedTable ={this.state.reservedTable} currentTableNumber = {this.state.currentTableNumber} closeTab = {this.resetTableOrder}></OrderWindow>:null}
                     </div>
                 </div>
             </div>
@@ -55,14 +75,3 @@ export class BarScheme extends React.Component{
 
 export default BarScheme
 
-//
-// <Table number='1' chairs = {3}></Table>
-// <Table number='2' chairs = {8}></Table>
-// <Table number='3' chairs = {8}></Table>
-// <Table number='4' chairs = {3}></Table>
-// <div className={styles.danceFloor}>
-// </div>
-// <Table number='5' chairs = {3}></Table>
-// <Table number='6' chairs = {3}></Table>
-// <Table number='7' chairs = {8}></Table>
-// <Table number='8' chairs = {8}></Table>

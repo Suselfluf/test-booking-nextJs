@@ -8,7 +8,7 @@ export default function NavPanel() {
                 <Link href={'/'}><a>Home</a></Link><a>Schedule</a><a>About</a>
             </div>
             <div className={styles.btns}>
-                <div id={styles.bookingBtn}><h6><Link href={'/bookingPage'}><a>Booking</a></Link></h6></div>
+                <Link href={'/bookingPage'}><div id={styles.bookingBtn}><h6><a>Booking</a></h6></div></Link>
                 <div id={styles.contactBtn}><h6>Contact us</h6></div>
             </div>
         </div>
