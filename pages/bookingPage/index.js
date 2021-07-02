@@ -14,6 +14,8 @@ export class bookingPage extends React.Component{
             <>
                 <Head>
                     <title>Booking Page</title>
+                    <meta name='keywords' content='next, javascript, next, and another keywords '/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 </Head>
                 <NavPanel></NavPanel>
                 <BarScheme></BarScheme>
