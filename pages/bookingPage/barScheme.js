@@ -20,9 +20,8 @@ export class BarScheme extends React.Component{
 
     handleState = (number) =>{
         this.setState({orderOpen:!this.state.orderOpen, currentTableNumber:number})
-        console.log(this.state.orderOpen)
         this.state.reservedTable = number
-        console.log(this.state.reservedTable)
+
     }
 
     resetTableOrder = () => {
