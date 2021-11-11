@@ -30,6 +30,9 @@ export class OrderWindow extends React.Component{
 
         this.data.setData(this.choose[2], this.choose[1], this.choose[3]);
 
+        // console.log("Converted string from Calendar: ", value.getMonth(), value.getDate(), value.getFullYear())
+        console.log(this.data.getData())
+
 
         await fetch('/api/inc', {
             method: 'post',
@@ -43,14 +46,15 @@ export class OrderWindow extends React.Component{
                 // this.openTime(data)
                 this.res = data
                 for (const resKey of data) {
-                    console.log(resKey.Date)
+                    // console.log(resKey.Date)
                 }
                 const res = JSON.stringify(data)
                 console.log(JSON.parse(res))
                 this.openTime(JSON.stringify(data))
             }));
+
         // get String with reservation info
-        // this.data.getData();
+        this.data.getData();
 
 
     }
@@ -90,7 +94,6 @@ export class OrderWindow extends React.Component{
                         <Calendar
                             onClickDay={(day) => {
                                 this.sendFetch(day)
-                                // this.openTime(day)
 
                             }}
                         />
