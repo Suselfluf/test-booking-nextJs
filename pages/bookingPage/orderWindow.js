@@ -9,7 +9,6 @@ export class OrderWindow extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            marked: false,
             isTimeOpen:false,
             reservedTime:"null"
         }
@@ -24,33 +23,50 @@ export class OrderWindow extends React.Component{
 
 
     sendFetch = async (value) => {
-        this.setState({marked: !this.state.marked})
-        this.choose = value.toString().split(" ");
-        this.day = this.choose[2] + ' ' + this.choose[1] + ' ' + this.choose[3];
+        console.log(value.getMonth() + 1)
 
-        this.data.setData(this.choose[2], this.choose[1], this.choose[3]);
+        const day = value.getDate();
+        let month = value.getMonth() + 1;
+        if(month < 10){
+            month = '0' + month;
+        }
+        const year = value.getFullYear();
 
-        // console.log("Converted string from Calendar: ", value.getMonth(), value.getDate(), value.getFullYear())
-        console.log(this.data.getData())
+        const chosenDate = year + '-' + month + '-' + day;
+        console.log("Converted string from Calendar: " + chosenDate);
+        // console.log(this.data.getData())
 
 
-        await fetch('/api/inc', {
+        // await fetch('/api/inc', {                                        // Example for fetch
+        //     method: 'post',
+        //     // body: JSON.stringify(this.data),
+        //     body: chosenDate,
+        //     headers: {
+        //         'Content-Type': 'text/plain',
+        //         // 'Accept': 'application/json'
+        //     },
+        // })
+        //     .then(res => res.json().then(data => {
+        //         console.log(data)
+        //         // this.openTime(data)
+        //         this.res = data
+        //         for (const resKey of data) {
+        //             // console.log(resKey.Date)
+        //         }
+        //         const res = JSON.stringify(data)
+        //         this.openTime(JSON.stringify(data))
+        //     }));
+
+        await fetch('/api/getReservs', {
             method: 'post',
-            body: JSON.stringify(this.data),
+            // body: JSON.stringify(this.data),
+            body: chosenDate,
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'text/plain',
             },
         })
             .then(res => res.json().then(data => {
-                // this.openTime(data)
-                this.res = data
-                for (const resKey of data) {
-                    // console.log(resKey.Date)
-                }
-                const res = JSON.stringify(data)
-                console.log(JSON.parse(res))
-                this.openTime(JSON.stringify(data))
+                console.log(data)                   // Process input date to const and display options depends on reserved date
             }));
 
         // get String with reservation info
