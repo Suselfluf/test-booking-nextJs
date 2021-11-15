@@ -10,12 +10,17 @@ export class OrderWindow extends React.Component{
         super(props)
         this.state = {
             isTimeOpen:false,
-            reservedTime:"null"
         }
         this.choose = 0;
         this.data = new reservingForm();
-        this.res = 'null';
+        this.reservedTime = [];
         this.day = null;
+        this.TimeArray = [
+            {id:1,time:"12:00:00 PM", reserved: false},
+            {id:2,time:"15:00:00 PM", reserved: false},
+            {id:3,time:"18:00:00 PM", reserved: true}, // for checking
+            {id:4,time:"09:00:00 PM", reserved: false}
+        ];
 
     }
 
@@ -59,15 +64,22 @@ export class OrderWindow extends React.Component{
 
         await fetch('/api/getReservs', {
             method: 'post',
-            // body: JSON.stringify(this.data),
             body: chosenDate,
             headers: {
                 'Content-Type': 'text/plain',
             },
         })
             .then(res => res.json().then(data => {
-                console.log(data)                   // Process input date to const and display options depends on reserved date
-            }));
+                for (const datum of data) {
+                    this.reservedTime.push(datum.Date)   // Process input date to const and display options depends on reserved date
+                    for (const timeOption of this.TimeArray) {  // Looping threw timeArray to check if it is reserved or not
+                        if(datum.Date == timeOption.time){
+                            timeOption.reserved=!timeOption.reserved
+                        }
+                    }
+                }
+                console.log(this.TimeArray)
+            })).then(this.openTime());
 
         // get String with reservation info
         this.data.getData();
@@ -75,10 +87,9 @@ export class OrderWindow extends React.Component{
 
     }
 
-    openTime = async (data) =>{
+    openTime = async () =>{
         this.setState({
             isTimeOpen:true,
-            reservedTime:data
         });
 
     }
@@ -88,12 +99,6 @@ export class OrderWindow extends React.Component{
     render(){
 
         const {currentTableNumber, closeTab} = this.props
-        const TimeArray = [
-            {id:1,time:"12:00"},
-            {id:2,time:"15:00"},
-            {id:3,time:"18:00"},
-            {id:4,time:"21:00"}
-        ];
 
         return(
             <>
@@ -110,7 +115,6 @@ export class OrderWindow extends React.Component{
                         <Calendar
                             onClickDay={(day) => {
                                 this.sendFetch(day)
-
                             }}
                         />
                     </div>
@@ -118,12 +122,10 @@ export class OrderWindow extends React.Component{
                     <div className={styles.choice}>
                         <p>Chosen date: </p>
                         {<p>{this.day}</p>}
-                        {this.state.isTimeOpen ? TimeArray.map(item => (
-                                <div key = {item.id} className={styles.timeTableCase}><TimeOption time = {item.time}> </TimeOption></div>
+                        {this.state.isTimeOpen ? this.TimeArray.map(item => (  // Asyncronious displaying module, have not loaded props on mounting stage
+                                <div key = {item.id} className={styles.timeTableCase}><TimeOption time = {item.time} reserved = {item.reserved}> </TimeOption></div>
                             )): null}
-
                     </div>
-
                 </div>
             </>
 

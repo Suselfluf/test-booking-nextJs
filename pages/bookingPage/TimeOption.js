@@ -9,12 +9,14 @@ export class TimeOption extends React.Component{
 
         }
         this.time=props.time
+        this.reserved=props.reserved
     }
 
 
 
 
     componentDidMount() {
+        console.log(this.reserved)
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -29,7 +31,7 @@ export class TimeOption extends React.Component{
 
         return(
             <>
-                <div className={styles.optionCase}>{this.time}</div>
+                <div className={styles.optionCase}>{this.time} {this.reserved}</div>
             </>
 
         )
