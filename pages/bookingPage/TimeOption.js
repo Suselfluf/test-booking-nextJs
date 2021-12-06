@@ -31,7 +31,8 @@ export class TimeOption extends React.Component{
 
         return(
             <>
-                <div className={styles.optionCase}>{this.time} {this.reserved}</div>
+                {this.reserved? <div className={styles.optionCaseFree}>Reserved</div>: <div className={styles.optionCaseReserved}>{this.time} {this.reserved}</div>}
+
             </>
 
         )
