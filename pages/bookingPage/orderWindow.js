@@ -18,7 +18,7 @@ export class OrderWindow extends React.Component{
         this.TimeArray = [
             {id:1,time:"12:00:00 PM", reserved: false},
             {id:2,time:"15:00:00 PM", reserved: false},
-            {id:3,time:"18:00:00 PM", reserved: false}, // for checking
+            {id:3,time:"18:00:00 PM", reserved: false},
             {id:4,time:"9:00:00 PM", reserved: false}
         ];
 
@@ -34,30 +34,7 @@ export class OrderWindow extends React.Component{
             month = '0' + month;
         }
         const year = value.getFullYear();
-
         const chosenDate = year + '-' + month + '-' + day;
-        // console.log(this.data.getData())
-
-
-        // await fetch('/api/inc', {                                        // Example for fetch
-        //     method: 'post',
-        //     // body: JSON.stringify(this.data),
-        //     body: chosenDate,
-        //     headers: {
-        //         'Content-Type': 'text/plain',
-        //         // 'Accept': 'application/json'
-        //     },
-        // })
-        //     .then(res => res.json().then(data => {
-        //         console.log(data)
-        //         // this.openTime(data)
-        //         this.res = data
-        //         for (const resKey of data) {
-        //             // console.log(resKey.Date)
-        //         }
-        //         const res = JSON.stringify(data)
-        //         this.openTime(JSON.stringify(data))
-        //     }));
 
         await fetch('/api/getReservs', {
             method: 'post',
@@ -67,20 +44,30 @@ export class OrderWindow extends React.Component{
             },
         })
             .then(res => res.json().then(data => {
-                for (const datum of data) {
-                    let time = datum.Date.split(', ')
-                    console.log(time[2])
-                    this.reservedTime.push(time[2])   // Process input date to const and display options depends on reserved date
-                    for (const timeOption of this.TimeArray) {  // Looping threw timeArray to check if it is reserved or not
-                        if(time[2] == timeOption.time){
-                            timeOption.reserved=!timeOption.reserved
+                this.TimeArray = [
+                    {id:1,time:"12:00:00 PM", reserved: false},
+                    {id:2,time:"15:00:00 PM", reserved: false},
+                    {id:3,time:"18:00:00 PM", reserved: false},
+                    {id:4,time:"9:00:00 PM", reserved: false}
+                ];
+                if (data.length == 0){
+                    this.reservedTime = []
+                }else{
+                    for (const datum of data) {
+                        let time = datum.Date.split(', ')
+                        this.reservedTime.push(time[2])                         // Process input date to const and display options depends on reserved date
+                        for (const timeOption of this.TimeArray) {              // Looping threw timeArray to check if it is reserved or not
+                            if(time[2] == timeOption.time){
+                                timeOption.reserved=!timeOption.reserved
+                            }
                         }
                     }
                 }
-                // console.log(this.reservedTime)   //Server's response
-                // console.log(this.TimeArray)  //Options
+                // console.log(this.reservedTime)                               //Server's response
+                // console.log(this.TimeArray)                                  //Options
                 this.openTime(this.TimeArray)
             }));
+
 
         // get String with reservation info
         this.data.getData();
@@ -90,7 +77,7 @@ export class OrderWindow extends React.Component{
 
     openTime = async (incomeDate) =>{
         this.setState({
-            isTimeOpen:!this.state.isTimeOpen,
+            isTimeOpen:true,
             date:incomeDate
         });
 
@@ -114,7 +101,7 @@ export class OrderWindow extends React.Component{
                     <div className={styles.content}>
                         <p>Table number: {currentTableNumber}</p>
                         <h1>Choose date of your visit</h1>
-                        <Calendar
+                        <Calendar onClick = {this.toogleTimeOption}
                             onClickDay={(day) => {
                                 this.sendFetch(day)
                             }}

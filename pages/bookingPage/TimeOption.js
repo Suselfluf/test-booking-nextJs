@@ -6,6 +6,7 @@ export class TimeOption extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
+            msg:null
 
         }
         this.time=props.time
@@ -16,22 +17,25 @@ export class TimeOption extends React.Component{
 
 
     componentDidMount() {
-        console.log(this.reserved)
+
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
     }
 
+    componentWillUnmount() {
 
-
+    }
 
 
     render(){
 
         return(
             <>
-                {this.reserved? <div className={styles.optionCaseFree}>Reserved</div>: <div className={styles.optionCaseReserved}>{this.time} {this.reserved}</div>}
+
+                {this.props.reserved ? <div className={styles.optionCaseFree}> Reserved</div> : <div className={styles.optionCaseReserved}>{this.time}</div>}
 
             </>
 
