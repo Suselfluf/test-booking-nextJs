@@ -11,6 +11,8 @@ export class TimeOption extends React.Component{
         }
         this.time=props.time
         this.reserved=props.reserved
+        this.currentTableNumber = props.tableNum
+        this.date = props.date
     }
 
 
@@ -29,13 +31,36 @@ export class TimeOption extends React.Component{
 
     }
 
+    handleClick = async () => {
+
+        const time = this.time.split(' ')[0]
+
+
+        const fetchInfo = this.date + ' ' + time + ' ' + this.currentTableNumber
+
+        alert(fetchInfo)
+
+
+
+        // await fetch('/api/bookTable', {
+        //     method: 'post',
+        //     body: fetchInfo,
+        //     headers: {
+        //         'Content-Type': 'text/plain',
+        //     },
+        // }).then(res => res.json().then(data => {
+        //     console.log(data)
+        // }));
+
+    }
+
 
     render(){
 
         return(
             <>
 
-                {this.props.reserved ? <div className={styles.optionCaseFree}> Reserved</div> : <div className={styles.optionCaseReserved}>{this.time}</div>}
+                {this.props.reserved ? <div className={styles.optionCaseReserved}> Reserved</div> : <div title={"Click To book"} className={styles.optionCaseFree} onClick={this.handleClick}>{this.time}</div>}
 
             </>
 

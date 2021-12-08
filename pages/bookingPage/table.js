@@ -13,7 +13,7 @@ export class Table extends React.Component{
         }
     }
 
-    booking = (e) => {
+    booking = async (e) => {
         let item = e.target.closest('h2')               // Починить чтобы при нажатии на цифру выделялся блок
         if (item != null){
             return 0
@@ -28,6 +28,17 @@ export class Table extends React.Component{
             }
             // Номер стола
             this.handleChange(this.number)
+
+             await fetch('/api/reservDepsOnTable', {
+                method: 'post',
+                body: this.number,
+                headers: {
+                    'Content-Type': 'text/plain',
+                },
+            })
+                .then(res => res.json().then(data => {
+
+                }))
         }
     }
 
