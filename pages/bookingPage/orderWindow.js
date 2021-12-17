@@ -9,14 +9,21 @@ export class OrderWindow extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            marked: false,
             isTimeOpen:false,
-            reservedTime:"null"
+            date:null,
+            numOfVisitors:1
         }
-        this.choose = 0;
         this.data = new reservingForm();
-        this.res = 'null';
+        this.reservedTime = [];
         this.day = null;
+        this.currentTableNumber = props.currentTableNumber;
+        this.TimeArray = [
+            {id:1,time:"12:00:00 PM", reserved: false},
+            {id:2,time:"15:00:00 PM", reserved: false},
+            {id:3,time:"18:00:00 PM", reserved: false},
+            {id:4,time:"9:00:00 PM", reserved: false}
+        ];
+        this.displayingData = null;
 
     }
 
@@ -24,43 +31,64 @@ export class OrderWindow extends React.Component{
 
 
     sendFetch = async (value) => {
-        this.setState({marked: !this.state.marked})
-        this.choose = value.toString().split(" ");
-        this.day = this.choose[2] + ' ' + this.choose[1] + ' ' + this.choose[3];
+        const day = value.getDate();
+        let month = value.getMonth() + 1;
+        if(month < 10){
+            month = '0' + month;
+        }
+        const year = value.getFullYear();
+        this.displayingData = year + '-' + month + '-' + day;
+        const fetchInfo = this.displayingData + ' ' + this.currentTableNumber;
 
-        this.data.setData(this.choose[2], this.choose[1], this.choose[3]);
-
-
-        await fetch('/api/inc', {
+        await fetch('/api/reservDepsOnTable', {
             method: 'post',
-            body: JSON.stringify(this.data),
+            body: fetchInfo,
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'text/plain',
             },
         })
             .then(res => res.json().then(data => {
-                // this.openTime(data)
-                this.res = data
-                for (const resKey of data) {
-                    console.log(resKey.Date)
+                this.TimeArray = [
+                    {id:1,time:"12:00:00 PM", reserved: false},
+                    {id:2,time:"15:00:00 PM", reserved: false},
+                    {id:3,time:"18:00:00 PM", reserved: false},
+                    {id:4,time:"9:00:00 PM", reserved: false}
+                ];
+                if (data.length == 0){
+                    this.reservedTime = []
+                }else{
+                    for (const datum of data) {
+                        let time = datum.Date.split(', ')
+                        this.reservedTime.push(time[2])                         // Process input date to const and display options depends on reserved date
+                        for (const timeOption of this.TimeArray) {              // Looping threw timeArray to check if it is reserved or not
+                            if(time[2] == timeOption.time){
+                                timeOption.reserved=!timeOption.reserved
+                            }
+                        }
+                    }
                 }
-                const res = JSON.stringify(data)
-                console.log(JSON.parse(res))
-                this.openTime(JSON.stringify(data))
+                // console.log(this.reservedTime)                               //Server's response
+                // console.log(this.TimeArray)                                  //Options
+                this.openTime(this.TimeArray)
             }));
+
+
         // get String with reservation info
-        // this.data.getData();
+        this.data.getData();
 
 
     }
 
-    openTime = async (data) =>{
+    openTime = async (incomeDate) =>{
         this.setState({
             isTimeOpen:true,
-            reservedTime:data
+            date:incomeDate
         });
 
+    }
+
+    handleSelectChange = (event) => {
+        this.setState({numOfVisitors:event.target.value})
     }
 
 
@@ -68,12 +96,6 @@ export class OrderWindow extends React.Component{
     render(){
 
         const {currentTableNumber, closeTab} = this.props
-        const TimeArray = [
-            {id:1,time:"12:00"},
-            {id:2,time:"15:00"},
-            {id:3,time:"18:00"},
-            {id:4,time:"21:00"}
-        ];
 
         return(
             <>
@@ -87,24 +109,33 @@ export class OrderWindow extends React.Component{
                     <div className={styles.content}>
                         <p>Table number: {currentTableNumber}</p>
                         <h1>Choose date of your visit</h1>
-                        <Calendar
+                        <Calendar onClick = {this.toogleTimeOption}
                             onClickDay={(day) => {
                                 this.sendFetch(day)
-                                // this.openTime(day)
-
                             }}
                         />
                     </div>
 
                     <div className={styles.choice}>
-                        <p>Chosen date: </p>
+                        <p className={styles.orderWindowHeader}>Chosen date: {this.displayingData}</p>
+                        <p className={styles.orderWindowHeader}> Chosen table: {this.currentTableNumber}</p>
+                        <p className={styles.orderWindowHeader}> Number of visitors:</p>
+                        <div className={styles.selectPlaceHolder}>
+                            <select className={styles.select} value={this.state.numOfVisitors} onChange={this.handleSelectChange}>  {/*Modifye select sass to make it rounded in options*/}
+                                <option value={'1'}>1</option>
+                                <option value={'2'}>2</option>
+                                <option value={'3'}>3</option>
+                                <option value={'4'}>4</option>
+                            </select>
+                        </div>
+
+
+
                         {<p>{this.day}</p>}
-                        {this.state.isTimeOpen ? TimeArray.map(item => (
-                                <div key = {item.id} className={styles.timeTableCase}><TimeOption time = {item.time}> </TimeOption></div>
+                        {this.state.isTimeOpen ? this.state.date.map(item => (  // When user choose different from current date rerender timeoptions with coresponding reserved dates
+                                <div key = {item.id} className={styles.timeTableCase}><TimeOption time = {item.time} reserved = {item.reserved} tableNum = {this.currentTableNumber} date ={this.displayingData} numOfVisitors={this.state.numOfVisitors}> </TimeOption></div>
                             )): null}
-
                     </div>
-
                 </div>
             </>
 
