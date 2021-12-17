@@ -29,16 +29,16 @@ export class Table extends React.Component{
             // Номер стола
             this.handleChange(this.number)
 
-             await fetch('/api/reservDepsOnTable', {
-                method: 'post',
-                body: this.number,
-                headers: {
-                    'Content-Type': 'text/plain',
-                },
-            })
-                .then(res => res.json().then(data => {
-
-                }))
+            //  await fetch('/api/reservDepsOnTable', {
+            //     method: 'post',
+            //     body: this.number,
+            //     headers: {
+            //         'Content-Type': 'text/plain',
+            //     },
+            // })
+            //     .then(res => res.json().then(data => {
+            //
+            //     }))
         }
     }
 

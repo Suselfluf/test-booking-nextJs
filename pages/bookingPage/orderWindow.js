@@ -10,7 +10,8 @@ export class OrderWindow extends React.Component{
         super(props)
         this.state = {
             isTimeOpen:false,
-            date:null
+            date:null,
+            numOfVisitors:1
         }
         this.data = new reservingForm();
         this.reservedTime = [];
@@ -36,7 +37,6 @@ export class OrderWindow extends React.Component{
             month = '0' + month;
         }
         const year = value.getFullYear();
-        console.log(this.currentTableNumber)
         this.displayingData = year + '-' + month + '-' + day;
         const fetchInfo = this.displayingData + ' ' + this.currentTableNumber;
 
@@ -48,7 +48,6 @@ export class OrderWindow extends React.Component{
             },
         })
             .then(res => res.json().then(data => {
-                console.log(data)
                 this.TimeArray = [
                     {id:1,time:"12:00:00 PM", reserved: false},
                     {id:2,time:"15:00:00 PM", reserved: false},
@@ -88,6 +87,10 @@ export class OrderWindow extends React.Component{
 
     }
 
+    handleSelectChange = (event) => {
+        this.setState({numOfVisitors:event.target.value})
+    }
+
 
 
     render(){
@@ -114,18 +117,23 @@ export class OrderWindow extends React.Component{
                     </div>
 
                     <div className={styles.choice}>
-                        <p>Chosen date: {this.displayingData}</p>
-                        <p>Chosen table: {this.currentTableNumber}</p>
-                        <p> Number of visitors:
-                            <select className={styles.select}>  {/*Modifye select sass to make it rounded in options*/}
-                                <option>1</option>
-                                <option>2</option>
+                        <p className={styles.orderWindowHeader}>Chosen date: {this.displayingData}</p>
+                        <p className={styles.orderWindowHeader}> Chosen table: {this.currentTableNumber}</p>
+                        <p className={styles.orderWindowHeader}> Number of visitors:</p>
+                        <div className={styles.selectPlaceHolder}>
+                            <select className={styles.select} value={this.state.numOfVisitors} onChange={this.handleSelectChange}>  {/*Modifye select sass to make it rounded in options*/}
+                                <option value={'1'}>1</option>
+                                <option value={'2'}>2</option>
+                                <option value={'3'}>3</option>
+                                <option value={'4'}>4</option>
                             </select>
-                        </p>
+                        </div>
+
+
 
                         {<p>{this.day}</p>}
                         {this.state.isTimeOpen ? this.state.date.map(item => (  // When user choose different from current date rerender timeoptions with coresponding reserved dates
-                                <div key = {item.id} className={styles.timeTableCase}><TimeOption time = {item.time} reserved = {item.reserved} tableNum = {this.currentTableNumber} date ={this.displayingData}> </TimeOption></div>
+                                <div key = {item.id} className={styles.timeTableCase}><TimeOption time = {item.time} reserved = {item.reserved} tableNum = {this.currentTableNumber} date ={this.displayingData} numOfVisitors={this.state.numOfVisitors}> </TimeOption></div>
                             )): null}
                     </div>
                 </div>
