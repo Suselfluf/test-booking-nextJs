@@ -27,7 +27,14 @@ export class TimeOption extends React.Component{
         this.state.reserved !== this.props.reserved ? this.handleChange() : {}
         this.currentTableNumber !== this.props.tableNum ? this.currentTableNumber = this.props.tableNum : {}
         this.numOfVisitors !== this.props.numOfVisitors ? this.numOfVisitors = this.props.numOfVisitors : {}
-        this.fetchInfo = this.date + ' ' +  this.time.split(' ')[0] + '/' + this.currentTableNumber + '/' + this.numOfVisitors
+        this.time = this.time.split(' ')[0]
+        if(this.time == '3:00:00'){
+            this.time = '15:00:00'
+        }else if(this.time == '6:00:00'){
+            this.time = '18:00:00'
+        }
+        this.fetchInfo = this.date + ' ' +  this.time + '/' + this.currentTableNumber + '/' + this.numOfVisitors
+
     }
 
 
@@ -75,9 +82,9 @@ export class TimeOption extends React.Component{
         return(
             <>
 
-                {this.state.isTicketOpen ? <Ticket closeTab = {this.openTicket} reservingInfo = {this.fetchInfo}></Ticket> : console.log('No') }
+                {this.state.isTicketOpen ? <Ticket closeTab = {this.openTicket} reservingInfo = {this.fetchInfo}></Ticket> : <></>}
 
-                {(this.state.reserved || this.state.isTicketOpen) ? <div></div> : <div title={"Click To book"} className={styles.optionCaseFree} onClick={this.openTicket}>{this.time}</div>}
+                {(this.state.reserved || this.state.isTicketOpen) ? <></> : <div title={"Click To book"} className={styles.optionCaseFree} onClick={this.openTicket}>{this.time}</div>}
 
                 {/*{(this.state.reserved || this.state.isTicketOpen) ? <div></div> : <Link href="/Ticket" ><div title={"Click To book"} className={styles.optionCaseFree} onClick={this.openTicket}>{this.time} {this.state.reserved.toString()}</div></Link>}*/}
 

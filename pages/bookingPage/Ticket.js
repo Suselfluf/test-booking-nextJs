@@ -17,6 +17,9 @@ export class Ticket extends React.Component{
 
     componentDidMount() {
 
+        console.log(this.props.reservingInfo)
+
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -33,11 +36,8 @@ export class Ticket extends React.Component{
     }
 
     reserveTable = async () => {
-        // let time = this.time.split(' ')[0]
-        // if(time == "9:00:00"){
-        //     time = "21:00:00"
-        // }
-        // const fetchInfo = this.date + ' ' + time + '/' + this.currentTableNumber + '/' + this.numOfVisitors
+
+
 
         await fetch('/api/bookTable', {
             method: 'post',
@@ -48,6 +48,8 @@ export class Ticket extends React.Component{
         }).then(res => res.json().then(data => {
             console.log(data)
         }));
+
+        window.location.reload();
 
     }
 

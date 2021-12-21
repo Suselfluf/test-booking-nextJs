@@ -19,8 +19,8 @@ export class OrderWindow extends React.Component{
         this.currentTableNumber = props.currentTableNumber;
         this.TimeArray = [
             {id:1,time:"12:00:00 PM", reserved: false},
-            {id:2,time:"15:00:00 PM", reserved: false},
-            {id:3,time:"18:00:00 PM", reserved: false},
+            {id:2,time:"3:00:00 PM", reserved: false},
+            {id:3,time:"6:00:00 PM", reserved: false},
             {id:4,time:"9:00:00 PM", reserved: false}
         ];
         this.displayingData = null;
@@ -50,8 +50,8 @@ export class OrderWindow extends React.Component{
             .then(res => res.json().then(data => {
                 this.TimeArray = [
                     {id:1,time:"12:00:00 PM", reserved: false},
-                    {id:2,time:"15:00:00 PM", reserved: false},
-                    {id:3,time:"18:00:00 PM", reserved: false},
+                    {id:2,time:"3:00:00 PM", reserved: false},
+                    {id:3,time:"6:00:00 PM", reserved: false},
                     {id:4,time:"9:00:00 PM", reserved: false}
                 ];
                 if (data.length == 0){
